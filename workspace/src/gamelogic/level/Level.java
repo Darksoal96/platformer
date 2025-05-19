@@ -195,6 +195,8 @@ public class Level {
 	//#############################################################################################################
 	//Your code goes here! 
 	//Please make sure you read the rubric/directions carefully and implement the solution recursively!
+	//precondition flower on map touched by player
+	//postconditions water spreads to all viable locations
 	private void water(int col, int row, Map map, int fullness) {
 		String full = "";
 		if(fullness == 0){
