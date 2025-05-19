@@ -1,9 +1,5 @@
 package gamelogic.level;
 
-import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.List;
-
 import gameengine.PhysicsObject;
 import gameengine.graphics.Camera;
 import gameengine.loaders.Mapdata;
@@ -20,6 +16,9 @@ import gamelogic.tiles.SolidTile;
 import gamelogic.tiles.Spikes;
 import gamelogic.tiles.Tile;
 import gamelogic.tiles.Water;
+import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Level {
 
@@ -197,7 +196,43 @@ public class Level {
 	//Your code goes here! 
 	//Please make sure you read the rubric/directions carefully and implement the solution recursively!
 	private void water(int col, int row, Map map, int fullness) {
-		
+		String full = "";
+		if(fullness == 0){
+			full = "Falling_water";
+		}
+		if(fullness == 1){
+			full = "Quarter_water";
+		}
+		if(fullness == 2){
+			full = "Half_water";
+		}
+		if(fullness == 3){
+			full = "Full_water";
+		}
+		Water w = new Water (col, row, tileSize, tileset.getImage(full), this, fullness);
+		map.addTile(col, row, w);
+
+                       //check if we can go down
+					   if(row+1<map.getTiles()[0].length && !(map.getTiles()[col][row+1] instanceof Water)&& !map.getTiles()[col][row+1].isSolid()){
+						water(col, row+1, map, 0);
+					   }
+					   else if(fullness>0){
+						int newfull = (fullness == 3) ? 2 : 1;
+
+                       //if we can’t go down go left and right.
+		//right
+		if(col+1 < map.getTiles().length && !(map.getTiles()[col+1][row] instanceof Water) && !map.getTiles()[col+1][row].isSolid() ) {
+			water(col+1, row, map, newfull);
+			
+		}
+		//left
+		if(col-1 >= 0 && !(map.getTiles()[col-1][row] instanceof Water)&& !map.getTiles()[col-1][row].isSolid()) {
+			water(col-1, row, map, newfull);
+		}
+	}
+
+
+
 	}
 
 
